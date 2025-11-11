@@ -1,15 +1,27 @@
 @import "tailwindcss";
 
-@theme{
-  --color-primary: #d97d3a;      
-  --color-primary-dark: #c56b28; 
-  --color-secondary: #3b8e81;    
-  --color-secondary-dark: #2d6b61; 
-  --color-accent: #f5a962;       
-  --color-textColor: #2c2c2c;   
-  --color-secondarytext: #5a5a5a; 
-  --color-bgColor: #f8f5f1;    
-  --color-complementary: #8b6f5f; 
+/* Light mode by default */
+@theme {
+  --color-primary: #d97d3a;
+  --color-secondary: #3b8e81;
+  --color-accent: #f5a962;
+  --color-textColor: #2c2c2c;
+  --color-secondarytext: #5a5a5a;
+  --color-bgColor: #f8f5f1;
+  --color-complementary: #8b6f5f;
+}
+
+/* DARK MODE OVERRIDES */
+@layer base {
+  .dark {
+    --color-primary: #c56b28;
+    --color-secondary: #2d6b61;
+    --color-accent: #e59446;
+    --color-textColor: #ffffff;
+    --color-secondarytext: #dddddd;
+    --color-bgColor: #1a1a1a;
+    --color-complementary: #6c5447;
+  }
 }
 
 /* @import "tw-animate-css";
