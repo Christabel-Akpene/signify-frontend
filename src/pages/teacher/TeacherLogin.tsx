@@ -1,0 +1,89 @@
+import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router";
+
+const loginSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+type loginFields = z.infer<typeof loginSchema>;
+
+const TeacherLogin = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginFields>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit: SubmitHandler<loginFields> = (data) => {
+    console.log(data);
+    navigate("/teacher/teacherDashboard");
+  };
+
+  return (
+    <div className="min-h-dvh bg-bgColor px-6 py-8">
+      <button
+        onClick={() => navigate("/roles")}
+        className="self-start mb-6 p-2 hover:bg-primary/10 rounded-lg transition-colors"
+      >
+        <ArrowLeft className="w-6 h-6 text-textColor" />
+      </button>
+      <h1 className="text-3xl font-bold text-textColor mb-2 text-center">Log In</h1>
+      <p className="text-secondarytext mb-8 text-center">Input your details to log in</p>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col space-y-4 mb-4">
+          <Label htmlFor="username" className="text-lg">Username</Label>
+          <Input
+            {...register("username")}
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter your username"
+          />
+          {errors.username && (
+            <p className="text-red-500 text-sm">{errors.username.message}</p>
+          )}
+        </div>
+
+        <div className="flex flex-col space-y-4 mb-4">
+          <Label htmlFor="password" className="text-lg">Password</Label>
+          <Input
+            {...register("password")}
+            type="text"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
+        </div>
+        <Button
+          type="submit"
+          className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 text-lg rounded-xl cursor-pointer mt-6"
+        >
+          Login
+        </Button>
+        
+      </form>
+            <p className="text-center text-md my-4">
+        Don't have an account?
+        <Link to="/teacher/teacherSignup" className="text-primary hover:underline px-2">
+          Signup
+        </Link>
+      </p>
+    </div>
+  );
+};
+
+export default TeacherLogin;
