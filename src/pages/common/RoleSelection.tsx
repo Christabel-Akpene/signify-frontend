@@ -21,6 +21,26 @@ const RoleSelection = () => {
 
       <div className="flex-1 flex flex-col gap-6 max-w-md mx-auto w-full">
         <button
+          onClick={() => navigate("/teacher/teacherLogin")}
+          className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-secondary active:scale-[0.98] overflow-hidden cursor-pointer"
+        >
+          <div className="bg-secondary/20 flex items-center justify-center p-6">
+            <img
+              src="/images/teacher.png"
+              alt="Teacher illustration"
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <div className="py-6">
+            <p className="text-2xl font-bold text-textColor group-hover:text-secondary transition-colors">
+              Teacher
+            </p>
+            <p className="text-sm text-secondarytext mt-1 px-4">
+              Guide students in their learning journey
+            </p>
+          </div>
+        </button>
+        <button
           onClick={() => navigate("/student/studentSignup")}
           className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary active:scale-[0.98] overflow-hidden cursor-pointer"
         >
@@ -41,25 +61,10 @@ const RoleSelection = () => {
           </div>
         </button>
 
-        <button onClick={() => navigate("/teacher/teacherLogin")} className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-secondary active:scale-[0.98] overflow-hidden cursor-pointer">
-          <div className="bg-secondary/20 flex items-center justify-center p-6">
-            <img
-              src="/images/teacher.png"
-              alt="Teacher illustration"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div className="py-6">
-            <p className="text-2xl font-bold text-textColor group-hover:text-secondary transition-colors">
-              Teacher
-            </p>
-            <p className="text-sm text-secondarytext mt-1 px-4">
-              Guide students in their learning journey
-            </p>
-          </div>
-        </button>
-
-        <button onClick={() => navigate("/individual/individualLogin")} className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary-dark active:scale-[0.98] overflow-hidden cursor-pointer">
+        <button
+          onClick={() => navigate("/individual/individualLogin")}
+          className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary-dark active:scale-[0.98] overflow-hidden cursor-pointer"
+        >
           <div className="bg-accent/60 flex items-center justify-center p-6">
             <img
               src="/images/individual.png"
