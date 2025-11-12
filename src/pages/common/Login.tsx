@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
+import { auth } from "@/services/firebase";
 
 const loginSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
