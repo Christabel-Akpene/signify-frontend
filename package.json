@@ -7,7 +7,8 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "buildxdeploy": "tsc -b && vite build && firebase deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
