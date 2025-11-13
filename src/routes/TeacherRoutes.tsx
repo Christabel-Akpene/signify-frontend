@@ -1,7 +1,6 @@
 import TeacherLayout from "@/components/layouts/TeacherLayout";
 import TeacherStudents from "@/pages/teacher/TeacherStudents";
 import TeacherDashboard from "@/pages/teacher/TeacherDashboard";
-import TeacherLogin from "@/pages/teacher/TeacherLogin";
 import TeacherSignup from "@/pages/teacher/TeacherSignup";
 import { Routes, Route } from "react-router";
 import StudentDetails from "@/pages/teacher/StudentDetails";
