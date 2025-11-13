@@ -1,72 +1,26 @@
-import { getTeacherStudents } from "@/api/teacher";
-import { useAuth } from "@/contexts/AuthContext";
-import { useEffect, useState } from "react";
-
-interface Student {
-  id: string;
-  uid: string;
-  studentCode: string;
-  username: string;
-  fullName: string;
-  teacherId: string;
-  teacherCode: string;
-  role: string;
-  createdAt: string;
-}
+import { StudentProgressCard } from "@/components/teacher/StudentProgressCard";
 
 const TeacherStudents = () => {
-  const { userData } = useAuth();
-  const [students, setStudents] = useState<Student[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchStudents = async () => {
-      if (!userData?.uid) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const fetchedStudents = await getTeacherStudents(userData.uid);
-        setStudents(fetchedStudents as Student[]);
-        setError(null);
-      } catch (err: any) {
-        console.error("Error fetching students:", err);
-        setError(err.message || "Failed to fetch students");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStudents();
-  }, [userData?.uid]);
-
-  if (loading) {
-    return <div>Loading students...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div>
-      <h1>My Students ({students.length})</h1>
-      {students.length === 0 ? (
-        <p>No students yet.</p>
-      ) : (
-        <ul>
-          {students.map((student) => (
-            <li key={student.id}>
-              {student.fullName} (@{student.username}) - {student.studentCode}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="min-h-dvh bg-bgColor px-6 py-8">
+        <h1 className="text-2xl text-center font-semibold mb-4">All Students</h1>
+        
+        <div>
+                <StudentProgressCard name="Ama Boadu" progress={95} status="on-track" />
+                <StudentProgressCard
+                  name="Kwame Mensah"
+                  progress={42}
+                  status="struggling"
+                />
+                <StudentProgressCard name="Abena Owusu" progress={88} status="on-track" />
+                <StudentProgressCard
+                  name="Kojo Appiah"
+                  progress={0}
+                  status="not-started"
+                />
+        </div>
     </div>
-  );
-};
+  )
+}
 
-export default TeacherStudents;
+export default TeacherStudents

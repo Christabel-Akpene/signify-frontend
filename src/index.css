@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 @import "tailwindcss";
 
 @theme{
@@ -10,6 +12,7 @@
   --color-secondarytext: #5a5a5a; 
   --color-bgColor: #f8f5f1;    
   --color-complementary: #8b6f5f; 
+  --font-nunito: "Nunito", sans-serif;
 }
 
 /* @import "tw-animate-css";
