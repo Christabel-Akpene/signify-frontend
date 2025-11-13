@@ -30,9 +30,7 @@ const LearningPathCard = ({ module, status }: LearningPathCardProps) => {
   return (
     <div className="p-3 rounded-md bg-white shadow-md text-lg text-secondarytext mb-4 flex items-center justify-between space-x-4">
       <Icon className={cn(color)} />
-
       <p>{module}</p>
-
       <p className={cn("font-semibold text-sm p-1 rounded-md", color)}>
         {label}
       </p>
