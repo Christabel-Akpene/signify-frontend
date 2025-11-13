@@ -2,9 +2,9 @@ import React from "react";
 
 interface StatCardProps {
   title: string;
-  value: number;
-  total: number;
-  percentage: string;
+  value?: number;
+  total: any;
+  percentage?: string;
   variant?: "default" | "success" | "warning" | "danger";
 }
 
@@ -48,13 +48,19 @@ const StatCard: React.FC<StatCardProps> = ({
 
   return (
     <div
-      className={`${styles.bg} ${styles.border} border rounded-lg p-6 min-w-[200px]`}
+      className={`${styles.bg} ${styles.border} border rounded-lg p-6 `}
     >
       <div className="space-y-2">
         <p className="text-slate-400 text-sm font-medium">{title}</p>
         <div className="flex items-baseline gap-1">
-          <span className="text-white text-4xl font-bold">{value}</span>
-          <span className="text-slate-400 text-2xl font-medium">/{total}</span>
+          <span className="text-white text-4xl font-bold">
+            {value ?? total}
+          </span>
+          {value !== undefined && (
+            <span className="text-slate-400 text-2xl font-medium">
+              /{total}
+            </span>
+          )}
         </div>
         <p className={`${styles.text} text-sm font-semibold`}>{percentage}</p>
       </div>

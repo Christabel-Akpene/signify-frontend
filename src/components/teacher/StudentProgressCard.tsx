@@ -19,52 +19,57 @@ export const StudentProgressCard = ({
 }: StudentProgressCardProps) => {
   const statusStyles = {
     "on-track": {
-      bg: "bg-secondary/30",
-      text: "text-secondary-dark",
-      progress: "[&>div]:bg-secondary",
+      dot: "bg-green-500",
+      progress: "[&>div]:bg-green-500",
       label: "On Track",
     },
     struggling: {
-      bg: "bg-primary/30",
-      text: "text-primary-dark",
-      progress: "[&>div]:bg-primary",
+      dot: "bg-amber-500",
+      progress: "[&>div]:bg-amber-500",
       label: "Struggling",
     },
     "not-started": {
-      bg: "bg-secondarytext/30",
-      text: "text-textColor",
-      progress: "[&>div]:bg-gray-300",
+      dot: "bg-gray-400",
+      progress: "[&>div]:bg-gray-400",
       label: "Not Started",
     },
   }[status];
 
   return (
     <Link to={"/teacher/teacherStudents/:student"}>
-      <div className="p-3 rounded-md bg-white shadow-md text-lg text-secondarytext mb-4 flex items-center justify-between space-x-4">
-        <div className="w-8 h-8">
-          <img
-            src={avatar("student")}
-            alt=""
-            className="rounded-full w-full h-full object-cover"
-          />
-        </div>
-        <div className="flex flex-col space-y-2 flex-3">
-          <div className="flex justify-between items-center text-sm">
-            <p>{name}</p>
-            <p>{progress}%</p>
+      <div className="group relative p-5 rounded-xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 mb-3">
+        <div className="flex items-center gap-4">
+          {/* Avatar */}
+          <div className="w-12 h-12 shrink-0">
+            <img
+              src={avatar("student")}
+              alt={name}
+              className="rounded-full w-full h-full object-cover ring-2 ring-gray-100"
+            />
           </div>
-          <Progress value={progress} className={statusStyles.progress} />
-        </div>
 
-        <p
-          className={cn(
-            "text-sm font-bold text-center p-1 rounded-md flex-2",
-            statusStyles.bg,
-            statusStyles.text
-          )}
-        >
-          {statusStyles.label}
-        </p>
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-medium text-gray-900 truncate">{name}</h3>
+              <span className="text-sm font-semibold text-gray-600 ml-2">
+                {progress}%
+              </span>
+            </div>
+            <Progress
+              value={progress}
+              className={cn("h-1.5", statusStyles.progress)}
+            />
+          </div>
+
+          {/* Status Indicator */}
+          <div className="flex items-center gap-2 shrink-0 ml-2">
+            <div className={cn("w-2 h-2 rounded-full", statusStyles.dot)} />
+            <span className="text-xs font-medium text-gray-600 hidden sm:inline">
+              {statusStyles.label}
+            </span>
+          </div>
+        </div>
       </div>
     </Link>
   );

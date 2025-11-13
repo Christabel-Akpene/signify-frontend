@@ -6,7 +6,7 @@ const TeacherLayout = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-bgColor font-nunito">
-      <div className="w-full max-w-sm flex-1 flex flex-col pb-20">
+      <div className="w-full flex-1 flex flex-col pb-20">
         <Outlet />
       </div>
       <TeacherNavbar />
