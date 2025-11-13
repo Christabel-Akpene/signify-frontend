@@ -44,10 +44,7 @@ export default function Piechart() {
   };
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h3 className="text-lg font-semibold text-textColor mb-4">
-        Student Progress
-      </h3>
+    <div className="">
       <div className="relative">
         <ResponsiveContainer width="100%" height={280}>
           <PieChart>
