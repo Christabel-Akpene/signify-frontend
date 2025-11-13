@@ -1,7 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useAuthActions } from "@/hooks/useAuthActions";
 import { Button } from "@/components/ui/button";
-
+import { Link } from "react-router";
 const StudentDashboard = () => {
   const { userData } = useAuth();
   const { handleLogout } = useAuthActions();
@@ -40,6 +40,7 @@ const StudentDashboard = () => {
             Access your communication practice tools and learning materials
             assigned by your teacher.
           </p>
+          <Link to={"/student/studentQuiz"}>Go to Quiz</Link>
         </div>
       </div>
     </div>
