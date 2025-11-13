@@ -1,6 +1,10 @@
 import { CircleUserRound } from "lucide-react";
+import { useAuthActions } from "@/hooks/useAuthActions";
+import { Button } from "@/components/ui/button";
 
 const TeacherProfile = () => {
+  const { handleLogout } = useAuthActions();
+
   return (
     <div className="min-h-dvh">
       <div className="px-4">
@@ -11,8 +15,6 @@ const TeacherProfile = () => {
           Adwoa Manu
         </p>
         <p className="text-center mt-2 mb-8">adjoa@gmail.com</p>
-
-
 
         <div className="shadow-md p-3 rounded-2xl mt-8 bg-white">
           <p className="font-bold my-3">Personal Info</p>
@@ -33,7 +35,13 @@ const TeacherProfile = () => {
             <p className="font-bold">Jan 2026</p>
           </div>
         </div>
-
+        <Button
+          onClick={handleLogout}
+          variant="outline"
+          className="bg-white hover:bg-gray-100"
+        >
+          Logout
+        </Button>
         <button className="w-full bg-accent text-white my-8 rounded-md font-semibold cursor-pointer py-1">
           Edit Profile
         </button>

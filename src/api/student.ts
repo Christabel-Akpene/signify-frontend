@@ -1,4 +1,4 @@
-import { auth, db } from "@/services/firebase";
+import { auth, db, secondaryAuth } from "@/services/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -27,8 +27,10 @@ interface StudentLoginData {
 
 export const signUpStudent = async ({
   studentData,
+  preserveAuthState = false,
 }: {
   studentData: StudentSignupData;
+  preserveAuthState?: boolean;
 }) => {
   try {
     // Validate that the teacher code exists
@@ -59,10 +61,14 @@ export const signUpStudent = async ({
       );
     }
 
+    // Use secondary auth instance if preserving auth state (teacher adding student)
+    // This prevents the teacher from being signed out
+    const authInstance = preserveAuthState ? secondaryAuth : auth;
+
     // Create Firebase Auth user with generated email and teacher code as password
     const email = `${studentData.username.toLowerCase()}@signify.app`;
     const userCredential = await createUserWithEmailAndPassword(
-      auth,
+      authInstance,
       email,
       studentData.teacherCode
     );
@@ -84,6 +90,7 @@ export const signUpStudent = async ({
     });
 
     console.log("Student created successfully");
+
     return { success: true, user };
   } catch (error: any) {
     console.error("Signup failed:", error.message);

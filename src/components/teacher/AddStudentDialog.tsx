@@ -66,7 +66,7 @@ export function AddStudentDialog({
       };
 
       console.log("Adding student:", studentData);
-      await signUpStudent({ studentData });
+      await signUpStudent({ studentData, preserveAuthState: true });
 
       // Close dialog and reset form
       setOpen(false);

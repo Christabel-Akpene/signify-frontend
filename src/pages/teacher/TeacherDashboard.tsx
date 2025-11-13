@@ -1,5 +1,5 @@
 import Piechart from "@/components/teacher/Piechart";
-import { LabeledProgress } from "@/components/teacher/LabeledProgress";
+// import { LabeledProgress } from "@/components/teacher/LabeledProgress";
 import { StudentProgressCard } from "@/components/teacher/StudentProgressCard";
 import StatCard from "@/components/common/StatCard";
 import { TeacherCodeCard } from "@/components/teacher/TeacherCodeCard";
