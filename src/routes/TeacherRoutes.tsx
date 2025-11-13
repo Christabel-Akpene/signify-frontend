@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router";
 import StudentDetails from "@/pages/teacher/StudentDetails";
 import TeacherProfile from "@/pages/teacher/TeacherProfile";
 import TeacherTranslation from "@/pages/teacher/TeacherTranslation";
+import TeacherLogin from "@/pages/teacher/TeacherLogin";
 
 const TeacherRoutes = () => {
   return (
@@ -13,12 +14,15 @@ const TeacherRoutes = () => {
       <Routes>
         <Route path="/teacherSignup" element={<TeacherSignup />} />
         <Route path="/teacherLogin" element={<TeacherLogin />} />
-        <Route element={<TeacherLayout/>}>
-            <Route path="/teacherDashboard" element={<TeacherDashboard />} />
-            <Route path="/teacherStudents" element={<TeacherStudents/>} />
-            <Route path="/teacherProfile" element={<TeacherProfile/>} />
-            <Route path="/teacherTranslation" element={<TeacherTranslation/>} />
-            <Route path="/teacherStudents/:student" element={<StudentDetails/>} />
+        <Route element={<TeacherLayout />}>
+          <Route path="/teacherDashboard" element={<TeacherDashboard />} />
+          <Route path="/teacherStudents" element={<TeacherStudents />} />
+          <Route path="/teacherProfile" element={<TeacherProfile />} />
+          <Route path="/teacherTranslation" element={<TeacherTranslation />} />
+          <Route
+            path="/teacherStudents/:student"
+            element={<StudentDetails />}
+          />
         </Route>
       </Routes>
     </>
