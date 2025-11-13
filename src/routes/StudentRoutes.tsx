@@ -2,6 +2,7 @@ import StudentDashboard from "@/pages/student/StudentDashboard";
 import StudentSignName from "@/pages/student/StudentSignName";
 import StudentSignup from "@/pages/student/StudentSignup";
 import StudentLogin from "@/pages/student/StudentLogin";
+import StudentLessonPath from "@/pages/student/StudentLessonPath";
 import { Routes, Route } from "react-router";
 import {
   ProtectedRoute,
@@ -41,6 +42,14 @@ const StudentRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["student"]}>
               <StudentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/studentLessonPath"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <StudentLessonPath />
             </ProtectedRoute>
           }
         />

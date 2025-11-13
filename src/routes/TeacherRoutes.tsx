@@ -6,6 +6,7 @@ import {
   ProtectedRoute,
   PublicRoute,
 } from "@/components/common/ProtectedRoute";
+import TeacherStudents from "@/pages/teacher/TeacherStudents";
 
 const TeacherRoutes = () => {
   return (
@@ -32,6 +33,14 @@ const TeacherRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
               <TeacherDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacherStudents"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <TeacherStudents />
             </ProtectedRoute>
           }
         />

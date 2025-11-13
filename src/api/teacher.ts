@@ -3,7 +3,15 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { nanoid } from "nanoid";
 
 interface TeacherSignupData {
@@ -71,6 +79,33 @@ export const loginTeacher = async ({
     return userDoc.data();
   } catch (error: any) {
     console.error("Login failed:", error.message);
+    throw error;
+  }
+};
+
+export const getTeacherStudents = async (teacherId: string) => {
+  try {
+    // Query students collection where teacherId matches
+    const studentsQuery = query(
+      collection(db, "students"),
+      where("teacherId", "==", teacherId)
+    );
+
+    const studentsSnapshot = await getDocs(studentsQuery);
+
+    if (studentsSnapshot.empty) {
+      return [];
+    }
+
+    // Map through documents and return student data
+    const students = studentsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return students;
+  } catch (error: any) {
+    console.error("Failed to fetch students:", error.message);
     throw error;
   }
 };
