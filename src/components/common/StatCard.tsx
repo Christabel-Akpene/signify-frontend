@@ -19,27 +19,27 @@ const StatCard: React.FC<StatCardProps> = ({
     switch (variant) {
       case "success":
         return {
-          bg: "bg-emerald-900/30",
-          border: "border-emerald-700/50",
-          text: "text-emerald-400",
+          bg: "bg-secondary/20",
+          border: "border-secondary/50",
+          text: "text-secondary",
         };
       case "warning":
         return {
-          bg: "bg-amber-900/30",
-          border: "border-amber-700/50",
-          text: "text-amber-400",
+          bg: "bg-accent/20",
+          border: "border-accent/50",
+          text: "text-accent",
         };
       case "danger":
         return {
-          bg: "bg-red-900/30",
-          border: "border-red-700/50",
-          text: "text-red-400",
+          bg: "bg-destructive/20",
+          border: "border-destructive/50",
+          text: "text-destructive",
         };
       default:
         return {
-          bg: "bg-slate-800/50",
-          border: "border-slate-700/50",
-          text: "text-slate-300",
+          bg: "bg-card",
+          border: "border-border",
+          text: "text-muted-foreground",
         };
     }
   };
@@ -47,17 +47,15 @@ const StatCard: React.FC<StatCardProps> = ({
   const styles = getVariantStyles();
 
   return (
-    <div
-      className={`${styles.bg} ${styles.border} border rounded-lg p-6 `}
-    >
+    <div className={`${styles.bg} ${styles.border} border rounded-lg p-6 `}>
       <div className="space-y-2">
-        <p className="text-slate-400 text-sm font-medium">{title}</p>
+        <p className="text-muted-foreground text-sm font-medium">{title}</p>
         <div className="flex items-baseline gap-1">
-          <span className="text-white text-4xl font-bold">
+          <span className="text-card-foreground text-4xl font-bold">
             {value ?? total}
           </span>
           {value !== undefined && (
-            <span className="text-slate-400 text-2xl font-medium">
+            <span className="text-muted-foreground text-2xl font-medium">
               /{total}
             </span>
           )}
