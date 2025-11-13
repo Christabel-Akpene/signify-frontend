@@ -6,21 +6,16 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import { AlertCircle } from "lucide-react";
+import { ArrowLeft, AlertCircle } from "lucide-react";
 import { Link } from "react-router";
-import { signUpStudent } from "@/api/student";
+import { loginStudent } from "@/api/student";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { getFriendlyAuthErrorMessage } from "@/lib/firebaseErrorMessages";
-import BackButton from "@/components/common/BackButton";
-const studentSignupSchema = z.object({
-  fullname: z.string().min(2, "Full name must be at least 2 characters"),
+
+const studentLoginSchema = z.object({
   username: z
     .string()
     .min(3, "Username must be at least 3 characters")
-    .regex(
-      /^[a-z0-9_]+$/,
-      "Username can only contain lowercase letters, numbers, and underscores"
-    )
     .toLowerCase(),
   teacherCode: z
     .string()
@@ -33,9 +28,9 @@ const studentSignupSchema = z.object({
     .transform((val) => `TCHR-${val}`),
 });
 
-type StudentSignupFields = z.infer<typeof studentSignupSchema>;
+type StudentLoginFields = z.infer<typeof studentLoginSchema>;
 
-const StudentSignup = () => {
+const StudentLogin = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
@@ -44,19 +39,19 @@ const StudentSignup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<StudentSignupFields>({
-    resolver: zodResolver(studentSignupSchema),
+  } = useForm<StudentLoginFields>({
+    resolver: zodResolver(studentLoginSchema),
   });
 
-  const onSubmit: SubmitHandler<StudentSignupFields> = async (data) => {
+  const onSubmit: SubmitHandler<StudentLoginFields> = async (data) => {
     try {
       setIsLoading(true);
       setApiError("");
-      console.log("Form Data:", data);
-      await signUpStudent({ studentData: data });
+      console.log("Login Data:", data);
+      await loginStudent({ loginData: data });
       navigate("/student/studentDashboard");
     } catch (error: any) {
-      console.error("Signup error:", error);
+      console.error("Login error:", error);
 
       if (error.code) {
         setApiError(getFriendlyAuthErrorMessage(error));
@@ -74,15 +69,22 @@ const StudentSignup = () => {
     <div className="min-h-dvh bg-bgColor flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-lg space-y-6 py-8">
         {/* Back Button */}
-        <BackButton />
+        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 lg:top-8 lg:left-8">
+          <button
+            onClick={() => navigate("/roles")}
+            className="p-2 hover:bg-primary/10 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-6 h-6 text-textColor" />
+          </button>
+        </div>
 
         {/* Header Section */}
         <div className="text-center space-y-2">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-textColor">
-            Join Your Learning Space
+            Welcome Back!
           </h1>
           <p className="text-secondarytext text-sm sm:text-base">
-            Connect with your teacher to access communication support tools
+            Access your learning materials and practice tools
           </p>
         </div>
 
@@ -96,23 +98,6 @@ const StudentSignup = () => {
 
         {/* Form Section */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Full Name Field */}
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="fullname" className="text-sm sm:text-base">
-              Full Name
-            </Label>
-            <Input
-              {...register("fullname")}
-              type="text"
-              id="fullname"
-              placeholder="Enter your full name"
-              className="h-12 sm:h-14 text-base"
-            />
-            {errors.fullname && (
-              <p className="text-red-500 text-sm">{errors.fullname.message}</p>
-            )}
-          </div>
-
           {/* Username Field */}
           <div className="flex flex-col space-y-2">
             <Label htmlFor="username" className="text-sm sm:text-base">
@@ -122,7 +107,7 @@ const StudentSignup = () => {
               {...register("username")}
               type="text"
               id="username"
-              placeholder="Choose a username (e.g., john_doe)"
+              placeholder="Enter your username"
               className="h-12 sm:h-14 text-base lowercase"
             />
             {errors.username && (
@@ -149,7 +134,7 @@ const StudentSignup = () => {
               />
             </div>
             <p className="text-xs text-secondarytext">
-              Ask your teacher for this code
+              Ask your teacher if you forgot this code
             </p>
             {errors.teacherCode && (
               <p className="text-red-500 text-sm">
@@ -164,30 +149,27 @@ const StudentSignup = () => {
             disabled={isLoading}
             className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 sm:py-7 text-base sm:text-lg rounded-xl cursor-pointer transition-all duration-200 mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Creating Account..." : "Sign Up"}
+            {isLoading ? "Logging in..." : "Log In"}
           </Button>
         </form>
 
-        {/* Login Link */}
+        {/* Sign Up Link */}
         <p className="text-center text-sm sm:text-base text-secondarytext">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            to="/student/studentLogin"
+            to="/student/studentSignup"
             className="text-primary hover:underline font-medium"
           >
-            Log In
+            Sign Up
           </Link>
         </p>
 
         {/* Info Box */}
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-sm text-secondarytext">
-          <p className="font-semibold text-textColor mb-1">
-            💡 Remember your username!
-          </p>
+          <p className="font-semibold mb-1">🔑 Need help?</p>
           <p>
-            You'll use your <span className="font-semibold">username</span> and{" "}
-            <span className="font-semibold">teacher code</span> to access your
-            learning materials.
+            Your teacher can help you with your login details. Contact them if
+            you're having trouble accessing your account.
           </p>
         </div>
       </div>
@@ -195,4 +177,4 @@ const StudentSignup = () => {
   );
 };
 
-export default StudentSignup;
+export default StudentLogin;

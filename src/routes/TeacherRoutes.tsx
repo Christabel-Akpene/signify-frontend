@@ -1,15 +1,40 @@
 import TeacherDashboard from "@/pages/teacher/TeacherDashboard";
-import TeacherLogin from "@/pages/teacher/TeacherLogin";
 import TeacherSignup from "@/pages/teacher/TeacherSignup";
 import { Routes, Route } from "react-router";
+import TeacherLogin from "@/pages/teacher/TeacherLogin";
+import {
+  ProtectedRoute,
+  PublicRoute,
+} from "@/components/common/ProtectedRoute";
 
 const TeacherRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/teacherSignup" element={<TeacherSignup />} />
-        <Route path="/teacherLogin" element={<TeacherLogin />} />
-        <Route path="/teacherDashboard" element={<TeacherDashboard />} />
+        <Route
+          path="/teacherSignup"
+          element={
+            <PublicRoute>
+              <TeacherSignup />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/teacherLogin"
+          element={
+            <PublicRoute>
+              <TeacherLogin />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/teacherDashboard"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <TeacherDashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

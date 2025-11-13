@@ -11,22 +11,22 @@ const RoleSelection = () => {
       <div className="text-center mb-12">
         <h1 className="text-3xl font-bold text-textColor mb-2">I am a...</h1>
         <p className="text-secondarytext text-sm">
-          Choose your role to personalize your experience
+          Select your role to access communication support tools
         </p>
       </div>
 
       <div className="flex-1 flex flex-col md:flex-row gap-6 max-w-5xl mx-auto w-full md:items-center">
         <RoleCard
           role="Teacher"
-          description="Guide students in their learning journey"
+          description="Empower learners with speech difficulties using AI tools"
           imagePath="/images/teacher.png"
           hoverColor="secondary"
           bgColor="bg-secondary/20"
-          onClick={() => navigate("/teacher/teacherLogin")}
+          onClick={() => navigate("/teacher/teacherSignup")}
         />
         <RoleCard
           role="Student"
-          description="Learn sign language at your own pace"
+          description="Access your learning materials and practice"
           imagePath="/images/student.png"
           hoverColor="primary"
           bgColor="bg-primary/20"
@@ -34,7 +34,7 @@ const RoleSelection = () => {
         />
         <RoleCard
           role="Individual"
-          description="Learn sign language at your own pace"
+          description="Practice communication skills independently"
           imagePath="/images/individual.png"
           hoverColor="accent/60"
           bgColor="bg-accent/60"
