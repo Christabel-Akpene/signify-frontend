@@ -1,10 +1,19 @@
-import { Copy } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Piechart from "@/components/teacher/Piechart";
 import { LabeledProgress } from "@/components/teacher/LabeledProgress";
 import { StudentProgressCard } from "@/components/teacher/StudentProgressCard";
+import { useState } from "react";
 
 const TeacherDashboard = () => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText("GSL-A8K2");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="min-h-dvh bg-bgColor px-3 py-4 flex flex-col text-textColor">
       <h1 className="text-2xl font-semibold my-3">Welcome, Jane</h1>
@@ -13,14 +22,21 @@ const TeacherDashboard = () => {
         <p className="text-2xl font-bold">GSL-A8K2</p>
         <div className="flex justify-between items-center">
           <p>Your classroom Code</p>
-          <Button className="bg-blue-500 p-2 text-white">
-            {" "}
-            <Copy size={12} /> copy
+          <Button onClick={handleCopy} className="bg-blue-500 p-2 text-white cursor-pointer">
+            {copied ? (
+              <>
+                <Check size={12} /> Copied!
+              </>
+            ) : (
+              <>
+                <Copy size={12} /> Copy
+              </>
+            )}
           </Button>
         </div>
       </div>
 
-      <p>At a Glance Stats</p>
+      <p className="text-lg font-bold mb-4">At a Glance Stats</p>
       <div className="p-3 rounded-md bg-white shadow-md text-lg text-secondarytext mb-4">
         <p className="font-semibold text-lg">Student Progress</p>
         <Piechart />

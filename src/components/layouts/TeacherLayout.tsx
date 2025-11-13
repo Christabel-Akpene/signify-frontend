@@ -1,9 +1,10 @@
 import {Outlet, Link, useLocation} from "react-router";
-import {Home, User, ScanText } from "lucide-react";
+import {Home, User, Users, ScanText } from "lucide-react";
 import NavigationButton from "@/pages/common/NavigationButton";
 const navigationItems = [
     {icon: Home, name: "Dashboard", to: "/teacher/teacherDashboard"},
     {icon: ScanText, name: "Translate", to: "/teacher/teacherTranslation"},
+    {icon: Users, name: "Students", to: "/teacher/teacherStudents"},
     {icon: User, name: "Profile", to: "/teacher/teacherProfile"},
 
 ]
