@@ -1,14 +1,16 @@
 import { NavLink } from "react-router";
-import { Home, Users } from "lucide-react";
+import { LayoutDashboard, User, Users, ScanText,GraduationCap  } from "lucide-react";
 
 const navigationLinks = [
-  { to: "/teacherDashboard", icon: Home, label: "Home" },
-  { to: "/teacherStudents", icon: Users, label: "Students" },
+  { icon: LayoutDashboard, name: "Dashboard", to: "/teacher/teacherDashboard" },
+  { icon: Users, name: "Students", to: "/teacher/teacherStudents" },
+  { icon: GraduationCap, name: "Lessons", to: "/teacher/teacherLessons" },
+  { icon: ScanText, name: "Translate", to: "/teacher/teacherTranslation" },
+  { icon: User, name: "Profile", to: "/teacher/teacherProfile" },
 ];
-
 const TeacherNavbar = () => {
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-between shadow-lg py-2 px-4 rounded-full w-[260px] md:w-[300px] z-50 bg-primary/20 backdrop-blur-md border border-border">
+    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-between shadow-lg py-2 px-4 rounded-full w-[300px] md:w-[350px] z-50 bg-primary/20 backdrop-blur-md border border-white">
       {navigationLinks.map((link) => (
         <NavLink
           key={link.to}
@@ -21,7 +23,7 @@ const TeacherNavbar = () => {
             }`
           }
         >
-          <link.icon size={22} />
+          <link.icon size={24} />
         </NavLink>
       ))}
     </nav>

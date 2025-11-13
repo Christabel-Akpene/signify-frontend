@@ -7,6 +7,7 @@ import StudentDetails from "@/pages/teacher/StudentDetails";
 import TeacherProfile from "@/pages/teacher/TeacherProfile";
 import TeacherTranslation from "@/pages/teacher/TeacherTranslation";
 import TeacherLogin from "@/pages/teacher/TeacherLogin";
+import TeacherLessons from "@/pages/teacher/TeacherLessons";
 
 const TeacherRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const TeacherRoutes = () => {
             path="/teacherStudents/:student"
             element={<StudentDetails />}
           />
+          <Route path="/teacherLessons" element={<TeacherLessons />} />
         </Route>
       </Routes>
     </>

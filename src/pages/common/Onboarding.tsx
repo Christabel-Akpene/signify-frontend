@@ -16,7 +16,13 @@ const Onboarding = () => {
               Hestia <span className="text-primary">Signify</span>
             </h1>
           </div>
-
+            {/* Disclaimer */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+            <p className="text-sm text-yellow-800">
+              <strong>Note:</strong> This application is currently in development. 
+              Data entered may be deleted without notice during this period.
+            </p>
+            </div>
           {/* Hero Text */}
           <div className="space-y-4">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-textColor leading-tight">
