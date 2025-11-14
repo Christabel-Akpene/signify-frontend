@@ -71,6 +71,7 @@ const TeacherStudents = () => {
                 name={student.fullName}
                 progress={student.progress || 0}
                 status={getStatus(student.progress)}
+                studentId={student.id}
               />
             ))}
           </>

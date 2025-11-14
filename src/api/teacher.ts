@@ -97,11 +97,38 @@ export const getTeacherStudents = async (teacherId: string) => {
       return [];
     }
 
-    // Map through documents and return student data
-    const students = studentsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    // Map through documents and return student data with progress
+    const students = await Promise.all(
+      studentsSnapshot.docs.map(async (studentDoc) => {
+        const studentData = {
+          id: studentDoc.id,
+          ...studentDoc.data(),
+        };
+
+        // Fetch all progress for this student
+        const progressQuery = query(
+          collection(db, "studentProgress"),
+          where("studentId", "==", studentDoc.id)
+        );
+        const progressSnapshot = await getDocs(progressQuery);
+
+        // Calculate overall progress
+        let overallProgress = 0;
+        if (!progressSnapshot.empty) {
+          const progressData = progressSnapshot.docs.map((doc) => doc.data());
+          const totalProgress = progressData.reduce(
+            (sum, p) => sum + (p.progress || 0),
+            0
+          );
+          overallProgress = Math.round(totalProgress / progressData.length);
+        }
+
+        return {
+          ...studentData,
+          progress: overallProgress,
+        };
+      })
+    );
 
     return students;
   } catch (error: any) {

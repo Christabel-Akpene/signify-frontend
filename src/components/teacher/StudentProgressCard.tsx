@@ -7,6 +7,7 @@ interface StudentProgressCardProps {
   name: string;
   progress: number;
   status: "on-track" | "struggling" | "not-started";
+  studentId: string;
 }
 
 const avatar = (seed: string) =>
@@ -16,6 +17,7 @@ export const StudentProgressCard = ({
   name,
   progress,
   status,
+  studentId,
 }: StudentProgressCardProps) => {
   const statusStyles = {
     "on-track": {
@@ -36,7 +38,7 @@ export const StudentProgressCard = ({
   }[status];
 
   return (
-    <Link to={"/teacher/teacherStudents/:student"}>
+    <Link to={`/teacher/teacherStudents/${studentId}`}>
       <div className="group relative p-5 rounded-xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all duration-200 mb-3">
         <div className="flex items-center gap-4">
           {/* Avatar */}

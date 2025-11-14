@@ -12,7 +12,10 @@ const StudentDetails = () => {
   return (
     <div className="min-h-dvh bg-bgColor flex flex-col px-3 py-4">
       <div className="flex items-center">
-        <button onClick={() => navigate("")} className="">
+        <button
+          onClick={() => navigate("/teacher/teacherStudents")}
+          className=""
+        >
           <ArrowLeft className="w-6 h-6 text-textColor" />
         </button>
         <h1 className="text-2xl font-semibold mx-auto">Akosua Manu</h1>
@@ -30,7 +33,7 @@ const StudentDetails = () => {
         <p className="text-blue-600 font-semibold">Analytics</p>
         <p className="font-bold text-lg">Student Progress</p>
         <p className="text-sm mb-4">Student's score over the last week</p>
-        <StudentLineChart/>
+        <StudentLineChart />
         {/* <Piechart /> */}
       </div>
 
@@ -48,7 +51,6 @@ const StudentDetails = () => {
         <div className="flex items-center justify-center rounded-md p-4 bg-white shadow-md">
           Hello
         </div>
-
       </div>
     </div>
   );

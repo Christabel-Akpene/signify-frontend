@@ -2,7 +2,6 @@ import { NavLink } from "react-router";
 import {
   LayoutDashboard,
   User,
-  Users,
   Route ,
   GraduationCap,
 } from "lucide-react";

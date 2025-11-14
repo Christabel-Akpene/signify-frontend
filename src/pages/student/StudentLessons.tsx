@@ -7,12 +7,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, Search, User, Settings, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  getAllLessons,
   getLessonsByCategory,
   getAllStudentProgress,
   getStudentStats,
   type Lesson,
-  type StudentProgress,
 } from "@/api/lessons";
 import { useNavigate } from "react-router";
 

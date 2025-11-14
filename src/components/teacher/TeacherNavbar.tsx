@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { LayoutDashboard, User, Users, ScanText,GraduationCap  } from "lucide-react";
+import { LayoutDashboard, User, Users,GraduationCap  } from "lucide-react";
 
 const navigationLinks = [
   { icon: LayoutDashboard, name: "Dashboard", to: "/teacher/teacherDashboard" },

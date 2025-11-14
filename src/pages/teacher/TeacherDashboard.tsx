@@ -99,14 +99,23 @@ const TeacherDashboard = () => {
 
       {/* Students Grid - Better spacing on larger screens */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {students.slice(0,3).map((student) => (
-          <StudentProgressCard
-            key={student.id}
-            name={student.fullName}
-            progress={42}
-            status="struggling"
-          />
-        ))}
+        {students.slice(0, 3).map((student) => {
+          const progress = student.progress || 0;
+          let status: "struggling" | "on-track" | "not-started" = "not-started";
+          if (progress === 0) status = "not-started";
+          else if (progress < 60) status = "struggling";
+          else status = "on-track";
+
+          return (
+            <StudentProgressCard
+              key={student.id}
+              name={student.fullName}
+              progress={progress}
+              status={status}
+              studentId={student.id}
+            />
+          );
+        })}
       </div>
       {/* <div className="p-4 md:p-5 rounded-md bg-white shadow-md text-lg text-secondarytext">
         <p className="font-semibold text-lg md:text-xl mb-2">

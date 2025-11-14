@@ -181,6 +181,17 @@ const StudentQuiz = () => {
     setFeedback(isCorrect ? "correct" : "incorrect");
     setIsDetecting(false);
 
+    // Trigger haptic feedback
+    if (navigator.vibrate) {
+      if (isCorrect) {
+        // Short single vibration for correct answer
+        navigator.vibrate(200);
+      } else {
+        // Two short vibrations for incorrect answer
+        navigator.vibrate([100, 100, 100]);
+      }
+    }
+
     if (isCorrect) {
       setScore((prev) => prev + 1);
       setCorrectAnswers((prev) => [...prev, currentQuestion.sign]);
@@ -476,7 +487,7 @@ const StudentQuiz = () => {
                 Try Again
               </Button>
               <Button
-                onClick={() => navigate("/student/lessons")}
+                onClick={() => navigate("/student/studentLessons")}
                 className="flex-1"
               >
                 Back to Lessons
