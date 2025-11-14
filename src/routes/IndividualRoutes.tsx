@@ -10,27 +10,30 @@ import {
   PublicRoute,
 } from "@/components/common/ProtectedRoute";
 import IndividualLogin from "@/pages/individual/IndividualLogin";
+import InidividualLayout from "@/components/layouts/InidividualLayout";
+import IndividualLessonPath from "@/pages/individual/IndividualLessonPath";
+import IndividualSettings from "@/pages/individual/IndividualSettings";
 
 const IndividualRoutes = () => {
   return (
-    <>
-      <Routes>
-        <Route
-          path="/individualSignup"
-          element={
-            <PublicRoute>
-              <IndividualSignup />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/individualLogin"
-          element={
-            <PublicRoute>
-              <IndividualLogin />
-            </PublicRoute>
-          }
-        />
+    <Routes>
+      <Route
+        path="/individualSignup"
+        element={
+          <PublicRoute>
+            <IndividualSignup />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/individualLogin"
+        element={
+          <PublicRoute>
+            <IndividualLogin />
+          </PublicRoute>
+        }
+      />
+      <Route element={<InidividualLayout />}>
         <Route
           path="/individualDashboard"
           element={
@@ -44,6 +47,14 @@ const IndividualRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["individual"]}>
               <IndividualLessons />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/individualSettings"
+          element={
+            <ProtectedRoute allowedRoles={["individual"]}>
+              <IndividualSettings />
             </ProtectedRoute>
           }
         />
@@ -64,6 +75,14 @@ const IndividualRoutes = () => {
           }
         />
         <Route
+          path="/individualLessonPath"
+          element={
+            <ProtectedRoute allowedRoles={["individual"]}>
+              <IndividualLessonPath />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/individualSignName"
           element={
             <ProtectedRoute allowedRoles={["individual"]}>
@@ -71,8 +90,8 @@ const IndividualRoutes = () => {
             </ProtectedRoute>
           }
         />
-      </Routes>
-    </>
+      </Route>
+    </Routes>
   );
 };
 

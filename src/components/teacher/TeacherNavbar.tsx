@@ -1,10 +1,10 @@
 import { NavLink } from "react-router";
-import { LayoutDashboard, User, Users,GraduationCap  } from "lucide-react";
+import { LayoutDashboard, User, Users  } from "lucide-react";
 
 const navigationLinks = [
   { icon: LayoutDashboard, name: "Dashboard", to: "/teacher/teacherDashboard" },
   { icon: Users, name: "Students", to: "/teacher/teacherStudents" },
-  { icon: GraduationCap, name: "Lessons", to: "/teacher/teacherLessons" },
+  // { icon: GraduationCap, name: "Lessons", to: "/teacher/teacherLessons" },
   // { icon: ScanText, name: "Translate", to: "/teacher/teacherTranslation" },
   { icon: User, name: "Profile", to: "/teacher/teacherProfile" },
 ];

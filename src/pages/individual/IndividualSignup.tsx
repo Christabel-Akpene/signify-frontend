@@ -61,7 +61,7 @@ const IndividualSignup = () => {
       setApiError(""); // Clear previous errors
       console.log("Form Data:", data);
       await signUpIndividual({ individualData: data });
-      navigate("/individual/individualSignName");
+      navigate("/individual/individualDashboard");
     } catch (error: any) {
       console.error("Signup error:", error);
 

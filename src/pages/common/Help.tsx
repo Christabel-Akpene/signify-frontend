@@ -106,7 +106,7 @@ const Help = () => {
                     Email Us
                   </h3>
                   <p className="text-xs md:text-sm text-muted-foreground">
-                    support@signify.com
+                    support@hestia-signify.com
                   </p>
                 </div>
               </div>
@@ -122,7 +122,7 @@ const Help = () => {
                     Call Us
                   </h3>
                   <p className="text-xs md:text-sm text-muted-foreground">
-                    +233 XX XXX XXXX
+                    +233 59534940
                   </p>
                 </div>
               </div>

@@ -42,8 +42,6 @@ const StudentQuiz = () => {
   const [lastPredictedLetter, setLastPredictedLetter] = useState<string>("");
   const [confidence, setConfidence] = useState<number>(0);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
-  const [studentName, setStudentName] = useState<string>("");
-  const [isNameInputPhase, setIsNameInputPhase] = useState(false);
 
   // Sign label mapping based on your model's classes
   const CLASS_LABELS = [
@@ -109,8 +107,14 @@ const StudentQuiz = () => {
 
         // Check if this is the name spelling lesson
         if (currentLesson.id === "lesson-spell-name") {
-          setIsNameInputPhase(true);
-          setIsDetecting(false);
+          // Use student's name from userData
+          const studentName = userData?.fullName || "Student";
+          const nameLetters = getNameSignSequence(studentName);
+          const quizQuestions: QuizQuestion[] = nameLetters.map((letter) => ({
+            sign: letter,
+            displayText: letter,
+          }));
+          setQuestions(quizQuestions);
         } else {
           // Create quiz questions from lesson signs
           const quizQuestions: QuizQuestion[] = currentLesson.signs.map(
@@ -275,20 +279,6 @@ const StudentQuiz = () => {
     }
   };
 
-  const handleNameSubmit = () => {
-    if (studentName.trim().length === 0) return;
-
-    const nameLetters = getNameSignSequence(studentName);
-    const quizQuestions: QuizQuestion[] = nameLetters.map((letter) => ({
-      sign: letter,
-      displayText: letter,
-    }));
-
-    setQuestions(quizQuestions);
-    setIsNameInputPhase(false);
-    setIsDetecting(true);
-  };
-
   const handleRetry = () => {
     setCurrentQuestionIndex(0);
     setScore(0);
@@ -300,12 +290,16 @@ const StudentQuiz = () => {
     setLastPredictedLetter("");
     setConfidence(0);
 
-    // For name spelling lesson, go back to name input
+    // For name spelling lesson, reload the name letters
     if (lesson?.id === "lesson-spell-name") {
-      setIsNameInputPhase(true);
-      setIsDetecting(false);
-      setStudentName("");
-      setQuestions([]);
+      const studentName = userData?.fullName || "Student";
+      const nameLetters = getNameSignSequence(studentName);
+      const quizQuestions: QuizQuestion[] = nameLetters.map((letter) => ({
+        sign: letter,
+        displayText: letter,
+      }));
+      setQuestions(quizQuestions);
+      setIsDetecting(true);
     } else {
       setIsDetecting(true);
       // Reshuffle questions
@@ -328,90 +322,6 @@ const StudentQuiz = () => {
           <p className="text-textColor text-xl mb-2">Loading AI Model...</p>
           <p className="text-secondarytext">Please wait...</p>
         </div>
-      </div>
-    );
-  }
-
-  // Name input phase for spelling lesson
-  if (isNameInputPhase && lesson?.id === "lesson-spell-name") {
-    return (
-      <div className="min-h-screen bg-bgColor p-6">
-        <Card className="max-w-2xl mx-auto">
-          <CardHeader>
-            <div className="flex items-center justify-between mb-4">
-              <Button
-                variant="ghost"
-                onClick={() => navigate("/student/lessons")}
-                className="gap-2"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back
-              </Button>
-            </div>
-            <CardTitle className="text-center text-3xl">
-              ✍️ Spell Your Name
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-center text-secondarytext">
-              Enter your name below and you'll practice signing each letter!
-            </p>
-
-            <div className="space-y-4">
-              <div>
-                <label
-                  htmlFor="studentName"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Your Name
-                </label>
-                <input
-                  id="studentName"
-                  type="text"
-                  value={studentName}
-                  onChange={(e) => setStudentName(e.target.value)}
-                  placeholder="Enter your name"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none text-lg"
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter" && studentName.trim().length > 0) {
-                      handleNameSubmit();
-                    }
-                  }}
-                />
-              </div>
-
-              {studentName && (
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-sm font-medium mb-2">
-                    You'll sign these letters:
-                  </p>
-                  <p className="text-2xl font-bold text-primary">
-                    {getNameSignSequence(studentName).join(" → ")}
-                  </p>
-                  <p className="text-sm text-secondarytext mt-2">
-                    {getNameSignSequence(studentName).length} letters to
-                    practice
-                  </p>
-                </div>
-              )}
-
-              <Button
-                onClick={handleNameSubmit}
-                disabled={studentName.trim().length === 0}
-                className="w-full py-6 text-lg"
-              >
-                Start Practice
-              </Button>
-            </div>
-
-            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-              <p className="text-sm text-yellow-900">
-                <strong>💡 Tip:</strong> Make sure you know the alphabet signs
-                before starting! This will help you spell your name correctly.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     );
   }
@@ -455,10 +365,16 @@ const StudentQuiz = () => {
               <p className="text-lg text-secondarytext mb-6">
                 {lesson?.id === "lesson-spell-name"
                   ? percentage >= 90
-                    ? `Perfect! You can sign your name "${studentName}" fluently!`
+                    ? `Perfect! You can sign your name "${
+                        userData?.fullName || "your name"
+                      }" fluently!`
                     : percentage >= 70
-                    ? `Great job spelling "${studentName}"! Keep practicing!`
-                    : `Good effort! Practice the letters in "${studentName}" you missed.`
+                    ? `Great job spelling "${
+                        userData?.fullName || "your name"
+                      }"! Keep practicing!`
+                    : `Good effort! Practice the letters in "${
+                        userData?.fullName || "your name"
+                      }" you missed.`
                   : percentage >= 90
                   ? "Outstanding! You're a sign language master!"
                   : percentage >= 70
@@ -491,7 +407,8 @@ const StudentQuiz = () => {
                 className="flex-1"
               >
                 Back to Lessons
-              </Button>s
+              </Button>
+              s
             </div>
           </CardContent>
         </Card>
@@ -553,9 +470,9 @@ const StudentQuiz = () => {
                 ? `Sign the letter: "${currentQuestion.displayText}"`
                 : `Sign: "${currentQuestion.displayText}"`}
             </CardTitle>
-            {lesson?.id === "lesson-spell-name" && studentName && (
+            {lesson?.id === "lesson-spell-name" && userData?.fullName && (
               <p className="text-center text-secondarytext mt-2">
-                Spelling: <span className="font-bold">{studentName}</span>
+                Spelling: <span className="font-bold">{userData.fullName}</span>
               </p>
             )}
           </CardHeader>

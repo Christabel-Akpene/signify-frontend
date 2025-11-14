@@ -1,140 +1,162 @@
-import { useAuth } from "@/contexts/AuthContext";
 import { useAuthActions } from "@/hooks/useAuthActions";
+import { useAuth } from "@/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { User, Mail, LogOut, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
+import {
+  ChevronRight,
+  Lock,
+  Bell,
+  HelpCircle,
+  Gavel,
+  LogOut,
+  Pencil,
+  ArrowLeft,
+} from "lucide-react";
 
 const IndividualProfile = () => {
-  const { userData } = useAuth();
   const { handleLogout } = useAuthActions();
+  const { userData } = useAuth();
   const navigate = useNavigate();
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
-
   return (
-    <div className="min-h-screen bg-bgColor px-4 py-6">
-      <div className="max-w-2xl mx-auto space-y-6">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/individual/individualDashboard")}
-            className="gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Button>
-          <h1 className="text-2xl font-bold text-textColor">My Profile</h1>
-          <div className="w-20"></div> {/* Spacer for centering */}
+        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+          <div className="flex items-center justify-between px-4 py-4 md:px-6">
+            <button className="hover:opacity-70 transition-opacity">
+              <ArrowLeft className="text-muted-foreground w-5 h-5 md:w-6 md:h-6" />
+            </button>
+            <h2 className="text-lg md:text-xl font-semibold">Profile</h2>
+            <div className="w-5 md:w-6" /> {/* Spacer for alignment */}
+          </div>
         </div>
 
-        {/* Profile Card */}
-        <Card className="p-6">
-          <div className="flex flex-col items-center text-center space-y-4">
-            <Avatar className="w-24 h-24 bg-primary text-white text-3xl">
-              <AvatarFallback className="bg-primary text-white text-3xl">
-                {userData?.fullName ? getInitials(userData.fullName) : "U"}
+        {/* Avatar Section */}
+        <div className="flex flex-col items-center mt-8 md:mt-12 px-4">
+          <div className="relative">
+            <Avatar className="w-24 h-24 md:w-32 md:h-32 border-4 border-primary">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback className="text-lg md:text-2xl">
+                {userData?.fullName
+                  ?.split(" ")
+                  .map((n) => n[0])
+                  .join("") || "ST"}
               </AvatarFallback>
             </Avatar>
-            <div>
-              <h2 className="text-2xl font-bold text-textColor">
-                {userData?.fullName || "User"}
-              </h2>
-              <p className="text-secondarytext">Independent Learner</p>
-            </div>
+            <button className="absolute bottom-0 right-0 md:bottom-1 md:right-1 bg-primary hover:bg-primary/90 p-2 md:p-2.5 rounded-full transition-colors shadow-lg">
+              <Pencil className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary-foreground" />
+            </button>
           </div>
-        </Card>
+          <h3 className="mt-4 md:mt-6 text-xl md:text-2xl font-semibold">
+            {userData?.fullName ||userData?.username || "Individual Name"}
+          </h3>
+          <p className="text-muted-foreground text-sm md:text-base mt-1">
+            {userData?.email}
+          </p>
 
-        {/* Info Cards */}
-        <div className="space-y-4">
-          <Card className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <User className="w-6 h-6 text-blue-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-secondarytext">Username</p>
-                <p className="text-lg font-semibold text-textColor">
-                  {userData?.username || "N/A"}
-                </p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <Mail className="w-6 h-6 text-green-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-secondarytext">Email</p>
-                <p className="text-lg font-semibold text-textColor">
-                  {userData?.email || "N/A"}
-                </p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <User className="w-6 h-6 text-purple-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-secondarytext">Role</p>
-                <p className="text-lg font-semibold text-textColor">
-                  {userData?.role
-                    ? userData.role.charAt(0).toUpperCase() +
-                      userData.role.slice(1)
-                    : "N/A"}
-                </p>
-              </div>
-            </div>
-          </Card>
+          <Button className="mt-6 px-8 md:px-10 py-5 md:py-6 text-sm md:text-base">
+            Edit Profile
+          </Button>
         </div>
 
-        {/* Stats Card */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-textColor mb-4">
-            Learning Stats
-          </h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <p className="text-2xl font-bold text-primary">12</p>
-              <p className="text-sm text-secondarytext">Lessons Completed</p>
-            </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">85%</p>
-              <p className="text-sm text-secondarytext">Average Score</p>
-            </div>
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-600">45</p>
-              <p className="text-sm text-secondarytext">Signs Learned</p>
-            </div>
-            <div className="text-center p-4 bg-orange-50 rounded-lg">
-              <p className="text-2xl font-bold text-orange-600">5</p>
-              <p className="text-sm text-secondarytext">Day Streak</p>
-            </div>
-          </div>
-        </Card>
+        {/* Account Settings */}
+        <div className="w-full mt-10 md:mt-16 px-4 md:px-6">
+          <p className="text-muted-foreground text-xs md:text-sm font-semibold mb-3 tracking-wider">
+            ACCOUNT SETTINGS
+          </p>
 
-        {/* Logout Button */}
-        <Button
-          onClick={handleLogout}
-          variant="outline"
-          className="w-full gap-2 text-red-600 border-red-600 hover:bg-red-50"
-        >
-          <LogOut className="w-4 h-4" />
-          Logout
-        </Button>
+          <div className="bg-card rounded-lg md:rounded-xl overflow-hidden border border-border shadow-sm">
+            <button className="flex items-center justify-between w-full px-4 md:px-6 py-4 md:py-5 border-b border-border text-left hover:bg-accent transition-colors group">
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <Lock className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                <span className="text-sm md:text-base font-medium">
+                  Change Password
+                </span>
+              </div>
+              <ChevronRight className="text-muted-foreground w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button className="flex items-center justify-between w-full px-4 md:px-6 py-4 md:py-5 hover:bg-accent transition-colors">
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <Bell className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                <span className="text-sm md:text-base font-medium">
+                  Push Notifications
+                </span>
+              </div>
+              <div className="w-11 h-6 bg-muted rounded-full flex items-center justify-end p-1 transition-colors">
+                <div className="w-4 h-4 bg-background rounded-full shadow-sm"></div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Application Section */}
+        <div className="w-full mt-8 md:mt-10 px-4 md:px-6">
+          <p className="text-muted-foreground text-xs md:text-sm font-semibold mb-3 tracking-wider">
+            APPLICATION
+          </p>
+
+          <div className="bg-card rounded-lg md:rounded-xl overflow-hidden border border-border shadow-sm">
+            <button
+              onClick={() => {
+                navigate("/help");
+              }}
+              className="flex items-center justify-between w-full px-4 md:px-6 py-4 md:py-5 border-b border-border hover:bg-accent transition-colors group"
+            >
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <HelpCircle className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                <span className="text-sm md:text-base font-medium">
+                  Help & Support
+                </span>
+              </div>
+              <ChevronRight className="text-muted-foreground w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/terms");
+              }}
+              className="flex items-center justify-between w-full px-4 md:px-6 py-4 md:py-5 hover:bg-accent transition-colors group"
+            >
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <Gavel className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                <span className="text-sm md:text-base font-medium">
+                  Terms & Privacy
+                </span>
+              </div>
+              <ChevronRight className="text-muted-foreground w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/individual/individualSettings");
+              }}
+              className="flex items-center justify-between w-full px-4 md:px-6 py-4 md:py-5 border-b border-border text-left hover:bg-accent transition-colors group"
+            >
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <Lock className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                <span className="text-sm md:text-base font-medium">
+                  Personalization and Settings
+                </span>
+              </div>
+              <ChevronRight className="text-muted-foreground w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+
+        {/* Logout */}
+        <div className="w-full mt-10 md:mt-12 px-4 md:px-6 pb-10 md:pb-16">
+          <Button
+            onClick={handleLogout}
+            variant="destructive"
+            className="w-full font-semibold py-6 md:py-7 text-sm md:text-base rounded-lg md:rounded-xl"
+          >
+            <LogOut className="mr-2 w-5 h-5" />
+            Logout
+          </Button>
+        </div>
       </div>
     </div>
   );
