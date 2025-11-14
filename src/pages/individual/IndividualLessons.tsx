@@ -20,7 +20,7 @@ interface LessonWithProgress extends Lesson {
   starsEarned: number;
 }
 
-export default function StudentLessons() {
+export default function IndividualLessons() {
   const { userData } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState<"basics" | "greetings" | "family" | "daily">(
@@ -46,8 +46,8 @@ export default function StudentLessons() {
       // Fetch lessons for the selected category
       const categoryLessons = await getLessonsByCategory(tab);
 
-      // Fetch student's progress for all lessons
-      const studentProgress = await getAllStudentProgress(userData.uid);
+      // Fetch individual's progress for all lessons
+      const individualProgress = await getAllStudentProgress(userData.uid);
 
       // Fetch overall stats
       const stats = await getStudentStats(userData.uid);
@@ -56,7 +56,7 @@ export default function StudentLessons() {
       // Combine lessons with progress data
       const lessonsWithProgress: LessonWithProgress[] = categoryLessons.map(
         (lesson) => {
-          const progress = studentProgress.find(
+          const progress = individualProgress.find(
             (p) => p.lessonId === lesson.id
           );
           return {
@@ -84,7 +84,7 @@ export default function StudentLessons() {
   );
 
   const handleLessonClick = (lessonId: string) => {
-    navigate(`/student/studentQuiz?lessonId=${lessonId}`);
+    navigate(`/individual/individualQuiz?lessonId=${lessonId}`);
   };
 
   if (loading) {
@@ -101,7 +101,10 @@ export default function StudentLessons() {
       <div className="flex justify-between items-center">
         <Settings className="w-6 h-6 cursor-pointer" />
         <h1 className="text-xl font-bold">GSL Lessons</h1>
-        <User className="w-6 h-6 cursor-pointer" />
+        <User
+          className="w-6 h-6 cursor-pointer"
+          onClick={() => navigate("/individual/individualProfile")}
+        />
       </div>
 
       {/* Search Bar */}
@@ -116,7 +119,7 @@ export default function StudentLessons() {
       </div>
 
       {/* Progress Card */}
-      <Card className="bg-white border border-border shadow-md">
+      <Card className="bg-white shadow-md">
         <CardContent className="pt-4 space-y-3">
           <div className="flex justify-between font-semibold text-sm">
             <span>Overall Progress</span>
@@ -157,7 +160,7 @@ export default function StudentLessons() {
           filteredLessons.map((lesson) => (
             <Card
               key={lesson.id}
-              className="bg-white shadow-md cursor-pointer border border-border hover:shadow-lg transition-shadow"
+              className="bg-white shadow-md cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleLessonClick(lesson.id)}
             >
               <CardContent className="p-4 space-y-2">
@@ -175,7 +178,9 @@ export default function StudentLessons() {
                       className="p-0 text-primary text-sm h-auto"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/student/studentQuiz?lessonId=${lesson.id}`);
+                        navigate(
+                          `/individual/individualQuiz?lessonId=${lesson.id}`
+                        );
                       }}
                     >
                       Practice with AI

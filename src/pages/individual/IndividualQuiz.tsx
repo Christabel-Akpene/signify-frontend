@@ -21,7 +21,7 @@ interface QuizQuestion {
   displayText: string;
 }
 
-const StudentQuiz = () => {
+const IndividualQuiz = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { userData } = useAuth();
@@ -92,7 +92,7 @@ const StudentQuiz = () => {
   useEffect(() => {
     const loadLesson = async () => {
       if (!lessonId) {
-        navigate("/student/lessons");
+        navigate("/individual/individualLessons");
         return;
       }
 
@@ -101,7 +101,7 @@ const StudentQuiz = () => {
         const currentLesson = lessons.find((l) => l.id === lessonId);
 
         if (!currentLesson) {
-          navigate("/student/lessons");
+          navigate("/individual/individualLessons");
           return;
         }
 
@@ -184,10 +184,8 @@ const StudentQuiz = () => {
     // Trigger haptic feedback
     if (navigator.vibrate) {
       if (isCorrect) {
-        // Short single vibration for correct answer
         navigator.vibrate(200);
       } else {
-        // Two short vibrations for incorrect answer
         navigator.vibrate([100, 100, 100]);
       }
     }
@@ -341,7 +339,7 @@ const StudentQuiz = () => {
             <div className="flex items-center justify-between mb-4">
               <Button
                 variant="ghost"
-                onClick={() => navigate("/student/lessons")}
+                onClick={() => navigate("/individual/individualLessons")}
                 className="gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -487,11 +485,11 @@ const StudentQuiz = () => {
                 Try Again
               </Button>
               <Button
-                onClick={() => navigate("/student/studentLessons")}
+                onClick={() => navigate("/individual/individualLessons")}
                 className="flex-1"
               >
                 Back to Lessons
-              </Button>s
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -518,7 +516,7 @@ const StudentQuiz = () => {
         <div className="flex items-center justify-between">
           <Button
             variant="ghost"
-            onClick={() => navigate("/student/studentLessons")}
+            onClick={() => navigate("/individual/individualLessons")}
             className="gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -659,4 +657,4 @@ const StudentQuiz = () => {
   );
 };
 
-export default StudentQuiz;
+export default IndividualQuiz;

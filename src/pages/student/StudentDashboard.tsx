@@ -60,7 +60,7 @@ const StudentDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {quickActions.map((action, index) => (
               <Link key={index} to={action.link}>
-                <Card className="p-6 hover:shadow-lg transition-shadow duration-200 cursor-pointer group">
+                <Card className="p-6 hover:shadow-lg transition-shadow duration-200 border border-border cursor-pointer group">
                   <div className="flex items-start gap-4">
                     <div
                       className={`${action.color} p-3 rounded-lg text-white group-hover:scale-110 transition-transform`}
@@ -84,7 +84,7 @@ const StudentDashboard = () => {
 
         {/* Progress Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="p-6">
+          <Card className="p-6 border border-border">
             <div className="flex items-center gap-2 mb-4">
               <TrendingUp className="w-5 h-5 text-blue-500" />
               <h2 className="text-xl font-semibold text-textColor">
@@ -143,7 +143,7 @@ const StudentDashboard = () => {
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-6 border border-border">
             <h2 className="text-xl font-semibold text-textColor mb-4">
               Recent Activity
             </h2>

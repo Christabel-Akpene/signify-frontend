@@ -12,6 +12,7 @@ import {
 import SchoolLayout from "@/components/layouts/StudentLayout";
 import StudentProfile from "@/pages/student/StudentProfile";
 import StudentLessons from "@/pages/student/StudentLessons";
+import StudentSettings from "@/pages/student/StudentSettings";
 
 const StudentRoutes = () => {
   return (
@@ -79,6 +80,14 @@ const StudentRoutes = () => {
             element={
               <ProtectedRoute allowedRoles={["student"]}>
                 <StudentLessons />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/studentSettings"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentSettings />
               </ProtectedRoute>
             }
           />

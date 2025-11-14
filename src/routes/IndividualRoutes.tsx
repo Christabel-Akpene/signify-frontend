@@ -1,6 +1,9 @@
 import IndividualDashboard from "@/pages/individual/IndividualDashboard";
 import IndividualSignName from "@/pages/individual/IndividualSignName";
 import IndividualSignup from "@/pages/individual/IndividualSignup";
+import IndividualLessons from "@/pages/individual/IndividualLessons";
+import IndividualQuiz from "@/pages/individual/IndividualQuiz";
+import IndividualProfile from "@/pages/individual/IndividualProfile";
 import { Routes, Route } from "react-router";
 import {
   ProtectedRoute,
@@ -33,6 +36,30 @@ const IndividualRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={["individual"]}>
               <IndividualDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/individualLessons"
+          element={
+            <ProtectedRoute allowedRoles={["individual"]}>
+              <IndividualLessons />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/individualQuiz"
+          element={
+            <ProtectedRoute allowedRoles={["individual"]}>
+              <IndividualQuiz />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/individualProfile"
+          element={
+            <ProtectedRoute allowedRoles={["individual"]}>
+              <IndividualProfile />
             </ProtectedRoute>
           }
         />
