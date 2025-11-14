@@ -97,15 +97,112 @@ export const getTeacherStudents = async (teacherId: string) => {
       return [];
     }
 
-    // Map through documents and return student data
-    const students = studentsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    // Map through documents and return student data with progress
+    const students = await Promise.all(
+      studentsSnapshot.docs.map(async (studentDoc) => {
+        const studentData = {
+          id: studentDoc.id,
+          ...studentDoc.data(),
+        };
+
+        // Fetch all progress for this student
+        const progressQuery = query(
+          collection(db, "studentProgress"),
+          where("studentId", "==", studentDoc.id)
+        );
+        const progressSnapshot = await getDocs(progressQuery);
+
+        // Calculate overall progress
+        let overallProgress = 0;
+        if (!progressSnapshot.empty) {
+          const progressData = progressSnapshot.docs.map((doc) => doc.data());
+          const totalProgress = progressData.reduce(
+            (sum, p) => sum + (p.progress || 0),
+            0
+          );
+          overallProgress = Math.round(totalProgress / progressData.length);
+        }
+
+        return {
+          ...studentData,
+          progress: overallProgress,
+        };
+      })
+    );
 
     return students;
   } catch (error: any) {
     console.error("Failed to fetch students:", error.message);
+    throw error;
+  }
+};
+
+export interface StudentProgressData {
+  attempts: number;
+  completed: boolean;
+  correctSigns: string[];
+  incorrectSigns: string[];
+  lastAccessed: string;
+  lessonId: string;
+  progress: number;
+  starsEarned: number;
+  studentId: string;
+}
+
+export const getStudentDetails = async (studentId: string) => {
+  try {
+    // Fetch student document
+    const studentDoc = await getDoc(doc(db, "students", studentId));
+
+    if (!studentDoc.exists()) {
+      throw new Error("Student not found");
+    }
+
+    const studentData = {
+      id: studentDoc.id,
+      ...studentDoc.data(),
+    };
+
+    // Fetch all progress for this student
+    const progressQuery = query(
+      collection(db, "studentProgress"),
+      where("studentId", "==", studentId)
+    );
+    const progressSnapshot = await getDocs(progressQuery);
+
+    const progressData: StudentProgressData[] = progressSnapshot.docs.map(
+      (doc) => doc.data() as StudentProgressData
+    );
+
+    // Calculate overall stats
+    let overallProgress = 0;
+    let completedLessons = 0;
+    let totalStars = 0;
+    const allIncorrectSigns = new Set<string>();
+
+    if (progressData.length > 0) {
+      const totalProgress = progressData.reduce((sum, p) => {
+        if (p.completed) completedLessons++;
+        totalStars += p.starsEarned || 0;
+        p.incorrectSigns?.forEach((sign) => allIncorrectSigns.add(sign));
+        return sum + (p.progress || 0);
+      }, 0);
+      overallProgress = Math.round(totalProgress / progressData.length);
+    }
+
+    return {
+      student: studentData,
+      progress: progressData,
+      stats: {
+        overallProgress,
+        completedLessons,
+        totalLessons: progressData.length,
+        totalStars,
+        problemSigns: Array.from(allIncorrectSigns),
+      },
+    };
+  } catch (error: any) {
+    console.error("Failed to fetch student details:", error.message);
     throw error;
   }
 };

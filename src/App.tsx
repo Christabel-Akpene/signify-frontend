@@ -6,6 +6,8 @@ import StudentRoutes from "./routes/StudentRoutes";
 import TeacherRoutes from "@/routes/TeacherRoutes";
 import IndividualRoutes from "@/routes/IndividualRoutes";
 import { AuthProvider } from "@/contexts/AuthContext";
+import Help from "@/pages/common/Help";
+import Terms from "@/pages/common/Terms";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route element={<MainLayout />}>
           <Route index element={<Onboarding />} />
           <Route path="/roles" element={<RoleSelection />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/terms" element={<Terms />} />
         </Route>
         <Route path="student/*" element={<StudentRoutes />} />
         <Route path="teacher/*" element={<TeacherRoutes />} />
