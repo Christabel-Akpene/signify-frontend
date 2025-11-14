@@ -5,7 +5,7 @@ const navigationLinks = [
   { icon: LayoutDashboard, name: "Dashboard", to: "/teacher/teacherDashboard" },
   { icon: Users, name: "Students", to: "/teacher/teacherStudents" },
   { icon: GraduationCap, name: "Lessons", to: "/teacher/teacherLessons" },
-  { icon: ScanText, name: "Translate", to: "/teacher/teacherTranslation" },
+  // { icon: ScanText, name: "Translate", to: "/teacher/teacherTranslation" },
   { icon: User, name: "Profile", to: "/teacher/teacherProfile" },
 ];
 const TeacherNavbar = () => {

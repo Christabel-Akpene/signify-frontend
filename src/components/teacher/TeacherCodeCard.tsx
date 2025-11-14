@@ -31,7 +31,7 @@ export const TeacherCodeCard = ({
       <div className="p-6">
         {/* Classroom Name */}
         <div className="mb-4">
-          <p className="text-sm font-medium text-gray-500 mb-1">Classroom</p>
+          <p className="text-sm font-medium text-gray-500 mb-1">School</p>
           <p className="text-base text-gray-900">{classroomName}</p>
         </div>
 

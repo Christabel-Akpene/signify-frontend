@@ -9,6 +9,9 @@ import {
   ProtectedRoute,
   PublicRoute,
 } from "@/components/common/ProtectedRoute";
+import SchoolLayout from "@/components/layouts/StudentLayout";
+import StudentProfile from "@/pages/student/StudentProfile";
+import StudentLessons from "@/pages/student/StudentLessons";
 
 const StudentRoutes = () => {
   return (
@@ -38,30 +41,57 @@ const StudentRoutes = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/studentDashboard"
-          element={
-            <ProtectedRoute allowedRoles={["student"]}>
-              <StudentDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/studentLessonPath"
-          element={
-            <ProtectedRoute allowedRoles={["student"]}>
-              <StudentLessonPath />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/studentQuiz"
-          element={
-            <ProtectedRoute allowedRoles={["student"]}>
-              <StudentQuiz />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<SchoolLayout />}>
+          <Route
+            path="/studentDashboard"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/studentLessonPath"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentLessonPath />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/studentQuiz"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentQuiz />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/studentProfile"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/studentLessons"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                <StudentLessons />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/lesson/:lessonId"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                {/* Create this component to show individual lesson content */}
+                <div>Individual Lesson View</div>
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
     </>
   );
